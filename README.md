@@ -22,7 +22,7 @@ Proyek ini dibangun menggunakan kombinasi teknologi berikut:
 Berikut adalah anggota tim yang berkontribusi dalam pengembangan EduDASH:
 * **[Rahmat Hidayat]** - [25051204070] ([@RahmatbaakaGithub](https://github.com/Rahmatbaaka))
 * **[Dhany Erlangga]** - [25051204192] ([@DhanyErlangga192](https://github.com/DhanyErlangga192))
-* **[Nama Anggota 3]** - [NIM] ([@usernameGithub](https://github.com/username))
+* **[Moaadh Ghamdan]** - [25051204253] ([@usernameGithub](https://github.com/username))
 * **[Nama Anggota 4]** - [NIM] ([@usernameGithub](https://github.com/username))
 
 ---
