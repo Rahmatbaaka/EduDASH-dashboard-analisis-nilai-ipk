@@ -1,0 +1,89 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    Dashboard Analisis Dataset
+  </title>
+
+  <!-- TAILWIND -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- ALPINE JS -->
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- CHART JS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'dashboard/css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboard/css/sidebar.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboard/css/components.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboard/css/sections.css' %}">
+
+</head>
+
+<body class="bg-main text-white">
+
+  <!-- BLUR -->
+  <div class="blur-circle top-0 left-0"></div>
+  <div class="blur-circle2 bottom-0 right-0"></div>
+
+<!-- HAMBURGER -->
+<button id="menuButton" class="menu-button">
+  ☰
+</button>
+
+<!-- SIDEBAR -->
+<aside id="sidebar" class="sidebar">
+  {% include 'includes/sidebar.html' %}
+</aside>
+
+<!-- OVERLAY -->
+<div id="overlay" class="overlay"></div>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    {% include 'includes/hero.html' %}
+    {% include 'includes/artikel.html' %}
+    {% include 'includes/prediksi.html' %}
+    {% include 'includes/visualisasi.html' %}
+
+    <!-- FOOTER -->
+    <footer class="text-center py-10 text-slate-300">
+
+      © 2026 Dashboard Analisis Dataset
+
+    </footer>
+
+  </main>
+
+  <!-- Data dari Django untuk JS -->
+  <script>
+    window.dashboardData = {
+        chart1: {{ chart1_json|safe }},
+        chart2: {{ chart2_json|safe }},
+        chart3: {{ chart3_json|safe }},
+        chart4: {{ chart4_json|safe }},
+        chart5: {{ chart5_json|safe }},
+        chart6: {{ chart6_json|safe }},
+        chart7: {{ chart7_json|safe }},
+        predictionResult: "{{ prediction|default:'' }}",
+        activeMenu: "{{ active_menu|default:'artikel' }}"
+    }; 
+  </script>
+
+  <!-- JS -->
+  <script src="{% static 'app.js' %}"></script>
+
+</body>
+</html>
