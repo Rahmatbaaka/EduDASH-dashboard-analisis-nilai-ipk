@@ -28,23 +28,26 @@ Berikut adalah anggota tim yang berkontribusi dalam pengembangan EduDASH:
 ---
 
 ## ✨ Fitur Utama
-Aplikasi EduDASH menyediakan 3 menu utama untuk memfasilitasi analisis data akademis mahasiswa:
+Aplikasi EduDASH kini menyediakan 4 menu utama dengan fungsionalitas yang lebih dinamis:
 
 ### 1. Menu Insight
-Menyajikan visualisasi insight data yang memberikan gambaran terhadap user tentang pola dan tren yang terjadi terhadap nilai IPK, serta hubungan antara fitur aktivitas dengan label. Menu ini didukung oleh 7 grafik interaktif:
-* **Hustle Chart (Bubble Chart):** Analisis korelasi waktu belajar (X), waktu tidur (Y), dan konsumsi kopi (R) terhadap tingkat IPK.
-* **Distraction Chart (Scatter Chart):** Analisis korelasi durasi bermain game (X) dan membuka sosial media (Y) terhadap IPK.
-* **Support Gap Analysis:** Perbandingan rata-rata waktu belajar, tidur, dan olahraga antara mahasiswa ber-IPK tinggi (>3.5) dan rendah (≤3.0).
-* **Equity Chart:** Analisis kesenjangan rata-rata IPK berdasarkan kepemilikan laptop dan status bekerja mahasiswa.
-* **Anomaly Chart:** Plotting khusus untuk mendeteksi anomali hubungan antara jam belajar harian dengan capaian IPK.
-* **Tipping Point Chart:** Visualisasi untuk melihat titik jenuh korelasi antara durasi jam tidur terhadap tingkat IPK mahasiswa.
-* **Institutional Chart:** Grafik perbandingan rata-rata IPK berdasarkan latar belakang asal sekolah mahasiswa.
+Menyajikan visualisasi data yang komprehensif menggunakan **Chart.js**. Menu ini didukung oleh 7 grafik analisis:
+* **The Hustle vs Health Balance (Bubble):** Memetakan hubungan antara jam belajar, jam tidur, dan konsumsi kopi terhadap IPK.
+* **The Digital Distraction Grid (Scatter):** Menganalisis ambang batas waktu bermain game dan sosial media sebelum berdampak negatif pada nilai.
+* **The Support System Gap (Radar):** Membandingkan profil kebiasaan mahasiswa ber-IPK tinggi vs rendah (Belajar, Tidur, Olahraga, Akses Laptop).
+* **The Digital & Economic Equity Gap (Bar):** Visualisasi dampak kepemilikan laptop dan status bekerja terhadap stabilitas IPK.
+* **Learning Efficiency Analysis (Bubble):** Meninjau sebaran efisiensi jam belajar harian mahasiswa terhadap perolehan IPK.
+* **The Sleep & Academic Tipping Point (Scatter):** Mendeteksi titik kritis penurunan performa akademik akibat kurang tidur.
+* **Institutional Background Performance (Bar):** Perbandingan rata-rata IPK berdasarkan latar belakang sekolah (SMA, SMK, MA).
 
 ### 2. Menu Prediksi
 Menggunakan model Machine Learning (ML) sederhana dengan tingkat akurasi yang optimal (memanfaatkan file `model.joblib`). Melalui fitur interaktif berbasis form POST ini, pengguna dapat menginputkan data aktivitas harian mereka untuk mendapatkan estimasi atau prediksi nilai IPK secara instan.
 
 ### 3. Menu Artikel
 Menyediakan artikel atau referensi penunjang yang memuat bukti keterkaitan secara ilmiah antara variabel aktivitas harian (seperti jam tidur, belajar, olahraga) dengan nilai IPK atau performa kognitif mahasiswa.
+
+### 4. Menu Riwayat & Export
+Menampilkan data riwayat prediksi dari database. Fitur ini mengimplementasikan **OOP Polimorfisme** untuk mengekspor data ke format **CSV** dan **Excel** secara dinamis.
 
 ---
 
@@ -79,7 +82,7 @@ source venv/bin/activate
 3. **Instal Dependency**
 Pastikan library utama seperti `django`, `pandas`, dan `joblib` terinstal melalui perintah:
 ```bash
-pip install -r requirements.txt
+pip install django pandas joblib openpyxl
 
 ```
 
@@ -106,24 +109,24 @@ Proyek EduDASH menerapkan pilar-pilar utama Pemrograman Berorientasi Objek secar
 
 ### 1. Abstraction (Abstraksi)
 
-Abstraksi digunakan untuk menyembunyikan detail cetak biru model prediksi dan pembuatan fungsi-fungsi dasar wajib melalui kelas abstrak (*Abstract Base Class*).
-
-* **Implementasi:** Di dalam file `services.py`, kami membuat kelas abstrak `BasePredictionModel` menggunakan modul `abc` dengan *decorator* `@abstractmethod` untuk fungsi `load_model()`, `predict()`, dan `load_dataset()`. Hal ini memastikan kelas turunan mengimplementasikan fungsi tersebut dengan benar tanpa mengekspos struktur kasarnya.
+Abstraksi menyembunyikan detail teknis yang kompleks dan hanya mengekspos fungsionalitas utama melalui kontrak kelas.
+* **Implementasi:** Menggunakan kelas abstrak `BasePredictionModel` dan `BaseExporter` (via modul `abc`). Kami menetapkan metode wajib seperti `@abstractmethod predict()` dan `export_data()`. Hal ini menjamin bahwa setiap komponen baru (model atau eksportir) memiliki standar fungsi yang sama tanpa harus mengekspos logika internalnya ke lapisan view.
 
 ### 2. Inheritance (Pewarisan)
 
-Pewarisan diimplementasikan untuk menurunkan properti dan kontrak *method* dari kelas induk abstrak ke kelas operasional yang lebih spesifik.
-
-* **Implementasi:** Kelas `AcademicPerformanceModel` mewarisi kelas `BasePredictionModel` (`class AcademicPerformanceModel(BasePredictionModel):`). Dengan mewarisi kelas tersebut, seluruh fungsi dasar prediksi dapat dikustomisasi khusus untuk menangani data performa akademik mahasiswa.
+Pewarisan memungkinkan penggunaan kembali kode dan pembentukan hierarki objek yang logis.
+* **Implementasi:** Kelas operasional seperti `AcademicPerformanceModel` mewarisi sifat dari `BasePredictionModel`. Demikian juga, kelas `CSVHistoryExporter` dan `ExcelHistoryExporter` mewarisi `BaseExporter`. Dengan teknik ini, kita tidak perlu menulis ulang logika pemuatan data dasar berulang kali di setiap kelas format ekspor.
 
 ### 3. Encapsulation (Pengkapsulan)
 
-Pengkapsulan digunakan untuk melindungi variabel atau status internal objek agar tidak dapat dimodifikasi secara sembarangan dari luar kelas.
+Pengkapsulan melindungi integritas data dengan membatasi akses langsung ke atribut internal objek.
+* **Implementasi:** Kami menggunakan atribut *private* dengan awalan *double underscore* (contoh: `self.__model_instance` dan `self.__dataset`). Data sensitif seperti objek model Machine Learning tidak dapat diubah secara paksa dari luar kelas (seperti dari file `views.py`), melainkan harus melalui metode publik yang valid seperti `predict()`.
 
-* **Implementasi:** Di dalam kelas `AcademicPerformanceModel`, kami menggunakan properti *private* dengan tanda *double underscore* (seperti `self.__model_name`, `self.__model_instance`, `self.__dataset`, dll.). Atribut-atribut ini hanya bisa diakses dan diubah secara internal melalui *method* bawaan kelas seperti `.load_model()` dan `.load_dataset()`.
+### 4. Polymorphism (Polimorfisme)
 
-### 4. Single Responsibility Principle / Polymorphism dalam Pemrosesan Data
+Polimorfisme memungkinkan satu antarmuka tunggal untuk menangani berbagai bentuk implementasi yang berbeda.
+* **Implementasi:** Diterapkan secara nyata pada sistem ekspor data. Meskipun `views.py` hanya memanggil satu perintah yang sama yaitu `.export_data()`, sistem akan menghasilkan output yang berbeda (CSV atau Excel) tergantung pada jenis objek yang sedang diinstansiasi. Ini memberikan fleksibilitas tinggi jika ingin menambah format ekspor baru di masa depan.
 
+### 5. Single Responsibility Principle (SRP)
 Kami memisahkan logika pemrosesan data visual dari Django View menggunakan kelas khusus untuk menjaga kerapian kode (*clean code*).
-
-* **Implementasi:** Kami membuat kelas `DashboardDataProcessor` di file `views.py`. Kelas ini bertugas khusus mengkapsulasi data frame (`pandas.DataFrame`) dan menyediakan berbagai *method* pemrosesan data grafik, seperti `process_chart1_hustle()` hingga `process_chart7_institutional()`, serta pembagian warna otomatis lewat helper OOP `get_color_mapping()`. Fungsi `dashboard_view` di Django cukup memanggil instansiasi dari kelas ini.
+* **Implementasi:** Kelas `DashboardDataProcessor` di `views.py` bertanggung jawab penuh mengolah `DataFrame` menjadi format JSON untuk 7 grafik berbeda. Dengan SRP, Django View hanya bertugas mengelola request/response tanpa harus tercampur dengan logika matematika yang rumit.
