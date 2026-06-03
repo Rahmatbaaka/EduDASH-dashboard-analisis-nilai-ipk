@@ -1,8 +1,8 @@
 <section id="prediksi" class="section content-section">
-  <div class="glass section-card">
+  <div class="bg-[#2D2D2D]/60 border border-white/10 rounded-[2.5rem] p-8 md:p-12 backdrop-blur-md shadow-2xl">
     <div class="mb-10">
-      <h2 class="section-main-title">Prediksi IPK Mahasiswa</h2>
-      <p class="section-main-desc">
+      <h2 class="text-4xl font-black text-white tracking-tight mb-3">Prediksi <span class="text-[#10B981]">IPK</span></h2>
+      <p class="text-[#B0C4DE] max-w-2xl">
         Simulasi prediksi IPK mahasiswa berdasarkan pola belajar, aktivitas harian, dan kebiasaan hidup.
       </p>
     </div>
@@ -11,49 +11,149 @@
       {% csrf_token %}
       <div class="grid md:grid-cols-2 gap-6">
         <div>
-          <label class="label-modern">Rata-rata Tidur (2-8 jam)</label>
-          <input type="number" step="0.1" min="2" max="8" name="tidur" id="tidur" class="input-modern" required>
+          <label class="text-xs font-bold text-[#B0C4DE] uppercase tracking-widest mb-2 block">Rata-rata Tidur (jam)</label>
+          <input type="number" step="0.1" min="2" max="8" name="tidur" id="tidur" class="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white outline-none focus:border-[#10B981] transition-all" required>
         </div>
         <div>
-          <label class="label-modern">Rata-rata Belajar (2-8 jam)</label>
-          <input type="number" step="0.1" min="2" max="8" name="belajar" id="belajar" class="input-modern" required>
+          <label class="text-xs font-bold text-[#B0C4DE] uppercase tracking-widest mb-2 block">Rata-rata Belajar (jam)</label>
+          <input type="number" step="0.1" min="2" max="8" name="belajar" id="belajar" class="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white outline-none focus:border-[#10B981] transition-all" required>
         </div>
         <div>
-          <label class="label-modern">Rata-rata Bermain (0-8 jam)</label>
-          <input type="number" step="0.1" min="0" max="8" name="bermain" id="bermain" class="input-modern" required>
+          <label class="text-xs font-bold text-[#B0C4DE] uppercase tracking-widest mb-2 block">Rata-rata Bermain (jam)</label>
+          <input type="number" step="0.1" min="0" max="8" name="bermain" id="bermain" class="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white outline-none focus:border-[#10B981] transition-all" required>
         </div>
         <div>
-          <label class="label-modern">Rata-rata Sosmed (0-8 jam)</label>
-          <input type="number" step="0.1" min="0" max="8" name="sosmed" id="sosmed" class="input-modern" required>
+          <label class="text-xs font-bold text-[#B0C4DE] uppercase tracking-widest mb-2 block">Rata-rata Sosmed (jam)</label>
+          <input type="number" step="0.1" min="0" max="8" name="sosmed" id="sosmed" class="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white outline-none focus:border-[#10B981] transition-all" required>
         </div>
         <div>
-          <label class="label-modern">Jumlah Kopi</label>
-          <input type="number" min="0" max="3" name="kopi" id="kopi" class="input-modern" required>
+          <label class="text-xs font-bold text-[#B0C4DE] uppercase tracking-widest mb-2 block">Jumlah Kopi</label>
+          <input type="number" min="0" max="3" name="kopi" id="kopi" class="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white outline-none focus:border-[#10B981] transition-all" required>
         </div>
         <div>
-          <label class="label-modern">Rata-rata Olahraga (0-3 jam)</label>
-          <input type="number" step="0.1" min="0" max="3" name="olahraga" id="olahraga" class="input-modern" required>
+          <label class="text-xs font-bold text-[#B0C4DE] uppercase tracking-widest mb-2 block">Rata-rata Olahraga (jam)</label>
+          <input type="number" step="0.1" min="0" max="3" name="olahraga" id="olahraga" class="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white outline-none focus:border-[#10B981] transition-all" required>
         </div>
         <div>
-          <label class="label-modern">Memiliki Laptop</label>
-          <select id="laptop" name="laptop" class="input-modern">
+          <label class="text-xs font-bold text-[#B0C4DE] uppercase tracking-widest mb-2 block">Memiliki Laptop</label>
+          <select id="laptop" name="laptop" class="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white outline-none focus:border-[#10B981] transition-all">
             <option value="1">Yes</option>
             <option value="0">No</option>
           </select>
         </div>
       </div>
-      <button type="submit" class="btn-primary mt-8 w-full">Prediksi IPK</button>
+      <button type="submit" class="mt-8 w-full bg-[#10B981] hover:bg-[#059669] text-white font-black uppercase tracking-[0.2em] py-5 rounded-2xl shadow-xl shadow-[#10B981]/10 transition-all transform hover:-translate-y-1">
+        Kalkulasi Prediksi Sekarang
+      </button>
     </form>
 
-    <div class="output-box mt-8">
-      <h3 class="text-2xl font-bold mb-3">Hasil Prediksi</h3>
-      <p id="hasilPrediksi" class="text-lg" style="color: white;">
+    <!-- KOTAK HASIL PREDIKSI UTAMA -->
+    <div class="mt-8">
+      <div class="bg-black/40 border border-white/10 rounded-[2rem] p-10 text-center shadow-inner">
         {% if prediction %}
-          Estimasi IPK Anda: <span class="text-4xl font-bold block mt-2 text-yellow-300">{{ prediction }}</span>
+          <h3 class="text-[#10B981] text-[10px] uppercase tracking-[0.4em] font-black mb-4">Analisis AI Selesai</h3>
+          <div class="flex flex-col items-center animate-in fade-in zoom-in duration-500">
+            <span class="text-[#B0C4DE] text-sm mb-2 font-medium">Estimasi IPK Anda:</span>
+            <span class="text-8xl font-black text-white drop-shadow-[0_0_20px_rgba(16,185,129,0.4)]"> <!-- Angka Metrik Besar Putih -->
+              {{ prediction|stringformat:".2f" }}
+            </span>
+            <p class="mt-6 text-[#B0C4DE] text-xs max-w-sm mx-auto leading-relaxed italic font-medium">
+              Prediksi ini didasarkan pada model performa akademik terkini.
+            </p>
+          </div>
         {% else %}
-          Belum ada prediksi. Silakan isi form di atas.
+          <div class="py-6">
+            <p class="text-emerald-800 text-sm italic">Hasil kalkulasi akan muncul secara otomatis di sini.</p>
+          </div>
         {% endif %}
+      </div>
+    </div>
+
+ <div class="mt-16 p-8 bg-black/20 rounded-[3rem] border border-emerald-500/10 shadow-inner">
+  
+  <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4 mb-6 pb-4 border-b border-slate-100">
+    <div>
+      <h3 class="text-xl font-bold text-emerald-50 flex items-center gap-2">
+        Riwayat Simulasi Prediksi
+      </h3>
+      <p class="text-xs text-emerald-100/40 mt-1">
+        Daftar rekam medis simulasi akademik. Maksimal menampilkan 5 baris teratas (gunakan scroll untuk melihat data lama).
       </p>
     </div>
+    
+    <div class="flex flex-wrap gap-2 w-full xl:w-auto justify-end">
+      <a href="{% url 'export_history' 'csv' %}" class="bg-blue-600/80 hover:bg-blue-600 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg border border-blue-500/30">
+        📄 CSV
+      </a>
+      <a href="{% url 'export_history' 'excel' %}" class="bg-emerald-600/80 hover:bg-emerald-600 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg border border-emerald-500/30">
+        📊 Excel
+      </a>
+    </div>
   </div>
+
+  <div class="overflow-x-auto rounded-2xl border border-white/5 bg-black/20 max-h-[310px] overflow-y-auto style-scrollbar shadow-inner">
+    <table class="w-full text-left border-collapse text-sm text-slate-300 table-fixed md:w-full min-w-[800px]">
+      <thead class="sticky top-0 bg-[#0f172a] z-10 shadow-md">
+        <tr class="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-400 border-b border-white/10">
+          <th class="py-5 px-6 bg-[#0f172a]">Waktu Simulasi</th>
+          <th class="py-4 px-4 bg-slate-900">Tidur</th>
+          <th class="py-4 px-4 bg-slate-900">Belajar</th>
+          <th class="py-4 px-4 bg-slate-900">Game</th>
+          <th class="py-4 px-4 bg-slate-900">Sosmed</th>
+          <th class="py-4 px-4 bg-slate-900">Kopi</th>
+          <th class="py-4 px-4 bg-slate-900">Olahraga</th>
+          <th class="py-4 px-4 bg-slate-900">Laptop</th>
+          <th class="py-4 px-4 text-center bg-emerald-600/20 text-emerald-400 font-bold border-l border-white/5">Hasil IPK</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-white/5">
+        {% for log in riwayat_prediksi %}
+        <tr class="hover:bg-white/5 transition">
+          <td class="py-3 px-4 font-medium text-slate-200">{{ log.waktu_prediksi|date:"d M Y H:i" }} WIB</td>
+          <td class="py-3 px-4">{{ log.tidur }} jam</td>
+          <td class="py-3 px-4">{{ log.belajar }} jam</td>
+          <td class="py-3 px-4">{{ log.bermain }} jam</td>
+          <td class="py-3 px-4">{{ log.sosmed }} jam</td>
+          <td class="py-3 px-4">{{ log.kopi }} gelas</td>
+          <td class="py-3 px-4">{{ log.olahraga }} jam</td>
+          <td class="py-3 px-4">
+            {% if log.laptop == 1 %}
+              <span class="px-2 py-0.5 text-xs font-bold rounded-md bg-blue-500/20 text-blue-400 border border-blue-500/30">Ya</span>
+            {% else %}
+              <span class="px-2 py-0.5 text-xs font-bold rounded-md bg-slate-500/10 text-slate-500 border border-white/5">Tidak</span>
+            {% endif %}
+          </td>
+          <td class="py-3 px-4 text-center font-bold text-emerald-400 bg-emerald-500/10 text-base border-l border-white/5">
+            {{ log.hasil_ipk|stringformat:".2f" }}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="9" class="py-8 text-center text-slate-500 font-medium italic">
+            🍃 Belum ada riwayat simulasi yang terekam. Cobalah lakukan simulasi di atas!
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<style>
+  .style-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .style-scrollbar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  .style-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+  .style-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(52, 211, 153, 0.3);
+  }
+</style>
 </section>
