@@ -130,3 +130,29 @@ Polimorfisme memungkinkan satu antarmuka tunggal untuk menangani berbagai bentuk
 ### 5. Single Responsibility Principle (SRP)
 Kami memisahkan logika pemrosesan data visual dari Django View menggunakan kelas khusus untuk menjaga kerapian kode (*clean code*).
 * **Implementasi:** Kelas `DashboardDataProcessor` di `views.py` bertanggung jawab penuh mengolah `DataFrame` menjadi format JSON untuk 7 grafik berbeda. Dengan SRP, Django View hanya bertugas mengelola request/response tanpa harus tercampur dengan logika matematika yang rumit.
+
+## Previews tampilan project
+
+<details>
+  <summary><b>Klik di sini untuk melihat screenshot lengkap</b></summary>
+  <br/>
+  
+  1. **Header**
+     ![Header](/previews/header.png)
+     
+  2. **Sidebar**
+     ![Sidebar](previews/sidebar.png)
+     
+  3. **Visualisasi**
+     ![Visualisasi](previews/visualisasi.png)
+     
+  4. **Artikel**
+     ![Artikel](previews/artikel.png)
+     
+  5. **Prediksi**
+     ![Prediksi](previews/prediksi.png)
+     
+  6. **Riwayat**
+     ![Riwayat](previews/riwayat.png)
+     
+</details>
